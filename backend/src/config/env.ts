@@ -29,6 +29,8 @@ const envSchema = z.object({
   MAX_EVIDENCE_PER_VERIFICATION: intString(12),
   RETRIEVAL_RESULTS_STANDARD: intString(8),
   RETRIEVAL_RESULTS_PROFESSIONAL: intString(10),
+  /** Hard cap on Tavily calls per /verify. Initial round consumes 1; remainder is for refinement. */
+  RETRIEVAL_MAX_CALLS_PER_RUN: intString(3),
   CLAIM_CONCURRENCY: intString(4),
 
   /** ISO date (YYYY-MM-DD). Empty/missing falls back to the system clock at run time. */

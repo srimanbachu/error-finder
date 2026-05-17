@@ -20,7 +20,10 @@ export type VerifyMutation = UseMutationResult<VerifyResponse, ApiError, VerifyR
 
 export const useVerifyMutation = (): VerifyMutation =>
   useMutation<VerifyResponse, ApiError, VerifyRequest>({
-    mutationFn: async (input) => verifyApi.submit(input),
+    mutationFn: async (input) => {
+      const accepted = await verifyApi.submit(input);
+      return verifyApi.pollUntilDone(accepted.correlationId);
+    },
     onSuccess: (result, vars) => {
       const entry: HistoryEntry = {
         correlationId: result.correlationId,
